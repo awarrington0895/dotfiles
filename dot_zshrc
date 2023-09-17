@@ -70,7 +70,10 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+    git
+    vi-mode
+)
 
 export LC_ALL=en_IN.UTF-8
 export LANG=en_IN.UTF-8
@@ -109,6 +112,9 @@ source $ZSH/oh-my-zsh.sh
 export PATH=$PATH:$HOME/bin
 export N_PREFIX=$HOME/.n
 export PATH=$N_PREFIX/bin:$HOME/.bun/bin:$PATH
+export PATH=$HOME/.local/scripts:$PATH
+
+alias zshconfig="nvim $HOME/.zshrc"
 
 alias vim="nvim"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

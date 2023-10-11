@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+credential_file="$HOME/.aws.credentials"
+
+if [[ ! -f "$credential_file" ]]; then
+    echo "No credentials file found at $credential_file"
+    exit 1
+fi
+
+profile=$(grep '\[' "$credential_file" | tr -d '[]' | fzf])
+
+export AWS_PROFILE=$profile

@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+echo \
+    | openssl s_client -showcerts -partial_chain -servername "$1" -connect "$1:443" \
+    | awk '/BEGIN/,/END/{ if(/BEGIN/){a++}; out="cert"a".pem"; print >out}'

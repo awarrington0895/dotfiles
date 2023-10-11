@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+desired_ignore=$(curl --silent --request GET --url "https://api.github.com/repos/github/gitignore/contents" | jq -r '.[].name' | grep -E 'gitignore$' | fzf)
+
+if [[ $desired_ignore == "" ]]; then
+    exit 0;
+fi
+
+curl --silent -H "Accept: application/vnd.github.raw" --request GET --url "https://api.github.com/repos/github/gitignore/contents/$desired_ignore" > .gitignore

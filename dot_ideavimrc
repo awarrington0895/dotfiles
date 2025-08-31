@@ -1,19 +1,13 @@
-" .ideavimrc is a configuration file for IdeaVim plugin. It uses
-"   the same commands as the original .vimrc configuration.
-" You can find a list of commands here: https://jb.gg/h38q75
-" Find more examples here: https://jb.gg/share-ideavimrc
+" Multicursor
+set multiple-cursors
 
-"" -- Suggested options --
-" Show a few lines of context around the cursor. Note that this makes the
-" text scroll if you mouse-click near the start or end of the window.
-
-" Options
+" ----------- Options -----------
 let mapleader = ' '
 let maplocalleader = ' '
 
 let g:highlightedyank_highlight_duration = "300"
 
-set scrolloff=11
+set scrolloff=10
 set number relativenumber
 set showcmd
 set visualbell
@@ -27,7 +21,6 @@ set clipboard+=unnamed
 map Q gq
 
 " --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
-
 " Highlight copied text
 Plug 'machakann/vim-highlightedyank'
 
@@ -47,24 +40,11 @@ set easymotion
 set which-key
 set notimeout
 
-" Remaps
-imap jj <Esc>
-
-map <leader>x <Action>(HideSideWindows)
-map <leader>z <Action>(ToggleZenMode)
-
-" Create new lines without entering insert mode
-map <leader>o o<Esc>k
-map <leader>O O<Esc>j
-
+" ----------- Remaps -----------
 " Finders
 map <leader>ff <Action>(GotoClass)
 map <leader>sf <Action>(GotoFile)
 map <leader>j <Plug>(easymotion-s)
-
-map <leader>c <Action>(CommentByLineComment)
-
-map <leader>e :NERDTreeToggle<CR>
 
 " Harpoon
 map <leader>h <Action>(HarpoonerAddFile)
@@ -79,6 +59,11 @@ map <leader>wl <Action>(SplitVertically)
 map <leader>wj <Action>(SplitHorizontally)
 map <leader>wo <Action>(Unsplit)
 
+let g:WhichKeyDesc_splits = "<leader>w Split"
+let g:WhichKeyDesc_split_vertical = "<leader>wl Split Vertically"
+let g:WhichKeyDesc_split_horizontal = "<leader>wj Split Horizontally"
+let g:WhichKeyDesc_unsplit = "<leader>wo Unsplit"
+
 " Refactoring
 map <leader>rn <Action>(RenameElement)
 map <leader>rm <Action>(ExtractMethod)
@@ -90,12 +75,13 @@ let g:WhichKeyDesc_rename_element = "<leader>rn Rename Element"
 let g:WhichKeyDesc_extract_method = "<leader>rm Extract Method"
 let g:WhichKeyDesc_rename_element = "<leader>rv IntroduceVariable"
 let g:WhichKeyDesc_rename_element = "<leader>rf IntroduceField"
-let g:WhichKeyDesc_rename_element = "<leader>rs Rename ElementRename ElementRename Element"
-let g:WhichKeyDesc_rename_element = "<leader>rr Rename Element"
+let g:WhichKeyDesc_rename_element = "<leader>rs ChangeSignature"
+let g:WhichKeyDesc_rename_element = "<leader>rr Refactorings.QuickListPopupAction"
 
 " Context Actions
 map <leader>am <Action>(ShowIntentionActions)
 map <leader>q <Action>(CloseContent)
+let g:WhichKeyDesc_show_intention_actions =  "<leader>am Show Intention Actions"
 
 " Executive Actions
 map \R <Action>(RunClass)
@@ -103,33 +89,58 @@ map \r <Action>(Run)
 map \d <Action>(Debug)
 map \vr <Action>(IdeaVim.ReloadVimRc.reload)
 
+let g:WhichKeyDesc_run_class =  "\\R RunClass"
+let g:WhichKeyDesc_run =  "\\r Run"
+let g:WhichKeyDesc_debug =  "\\d Debug"
+let g:WhichKeyDesc_reload_vimrc =  "\\vr Reload vimrc"
+
 " Toggles
 map \tz <Action>(ToggleZenMode)
-let g:WhichKeyDesc_zen_mode = "\\tz Toggle Zen mode"
-
-nmap gl $
-nmap gh ^
-vmap gl $
-vmap gh ^
-
-nmap <leader>p "+p
-nmap <leader>P "+P
+map \tw <Action>(EditorToggleUseSoftWraps)
+let g:WhichKeyDesc_toggles = "\\t Toggle"
+let g:WhichKeyDesc_zen_mode = "\\tz Zen mode"
+let g:WhichKeyDesc_toggle_wrap = "\\tw Word wrap"
 
 " Easier page navigation
 map <C-d> <C-d>zz
 map <C-u> <C-u>zz
 map <C-k> <Action>(MethodUp)
 map <C-j> <Action>(MethodDown)
+nmap gl $
+nmap gh ^
+vmap gl $
+vmap gh ^
 
+" Multiple cursor
+nmap <C-n> <Plug>NextWholeOccurrence
+vmap <C-n> <Plug>NextWholeOccurrence
+nmap g<C-n> <Plug>NextOccurrence
+vmap g<C-n> <Plug>NextOccurrence
+vmap <C-x> <Plug>SkipOccurrence
+vmap <C-p> <Plug>RemoveOccurrence
+nmap <leader><C-n> <Plug>AllWholeOccurrences
+vmap <leader><C-n> <Plug>AllWholeOccurrences
+nmap <leader>g<C-n> <Plug>AllOccurrences
+vmap <leader>g<C-n> <Plug>AllOccurrences
+
+" Misc
 vmap <leader>R "+p
 let g:WhichKeyDesc_visual_replace_in_reg = "<leader>R Replace in register"
 
-"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
-"" Map \r to the Reformat Code action
-"map \r <Action>(ReformatCode)
+vmap / <Esc>/\\%V
 
-"" Map <leader>d to start debug
-"map <leader>d <Action>(Debug)
+nmap <leader>p "+p
+nmap <leader>P "+P
 
-"" Map \b to toggle the breakpoint on the current line
-"map \b <Action>(ToggleLineBreakpoint)
+map <leader>c <Action>(CommentByLineComment)
+
+map <leader>e :NERDTreeToggle<CR>
+
+imap jj <Esc>
+
+map <leader>x <Action>(HideSideWindows)
+
+" Create new lines without entering insert mode
+map <leader>o o<Esc>k
+map <leader>O O<Esc>j
+
